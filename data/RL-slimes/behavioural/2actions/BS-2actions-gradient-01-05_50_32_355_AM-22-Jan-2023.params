@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+TIMESTAMP: 05:50:32.355 AM 22-Jan-2023
+PARAMS:
+  population 0
+  wiggle-angle 45
+  look-ahead 1
+  sniff-threshold 0.9
+  sniff-angle 45
+  chemical-drop 3
+  diffuse-share 1
+  evaporation-rate 0.9
+  cluster-threshold 50
+  cluster-radius 5
+  learning-turtles 50
+  ticks-per-episode 500
+  episodes 10000
+  learning-rate 0.1
+  discount-factor 0.9
+  reward 100
+  penalty -2
+  e-greedy 0.9 0.999
+ACTION SPACE: move-and-drop walk-and-drop 
+OBSERVATION SPACE: chemical-gradient 
+REWARD: rewardFunc8
+--------------------------------------------------------------------------------

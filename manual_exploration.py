@@ -43,13 +43,13 @@ def compute_mca_5(row, ag):
 # plt.style.use("tableau-colorblind10")
 plt.style.use("seaborn-colorblind")
 
+
 # DOC load data and aggregate on episodes (mean)
-df = pd.read_csv("data/RL-slimes/behavioural/BS-test-02-12_25_47_387_AM-10-Oct-2022.csv")
+df = pd.read_csv("data/RL-slimes/behavioural/5actions/BS-test-5actions-12_58_34_343_AM-18-Oct-2022.csv")
 print(df.head())
 # NB no longer useful for new data (see episode datapoints in .csv file!)
 df = df.groupby(["Episode"]).mean()
 print(df.head())
-
 # (line) marker = ['o', '^', '8', 's', '*', '+', 'x']
 # (bar) hatch = * + - . / O X \ o x |
 
@@ -71,7 +71,6 @@ plt.plot(df.index, df[" Avg reward X episode"].rolling(100).mean(), label="rolli
 #          markersize=.5, linewidth=.5, color='#FFB000')
 plt.legend()
 fig.tight_layout()
-
 
 # DOC plot cluster size over time
 fig = plt.figure(figsize=(10, 4), dpi=200)
@@ -114,46 +113,21 @@ plt.plot(df.index, df[" drop-chemical"], label="drop-chemical", marker='s', mark
 plt.legend()
 fig.tight_layout()
 
-# NB superseded by following routines
-# DOC plot action distribution per agent (sampled randomly)
-for agent in np.random.randint(0, 50, 1):  # DOC last param is # of agents to sample
-    fig = plt.figure(figsize=(10, 4), dpi=200)
-    plt.grid()
-    plt.title(f"Actions per episode for agent {agent}")
-    plt.ylabel(f"# times action chosen")
-    plt.xlabel(f"episodes")
-    # plt.plot(df_episode_group.index, df_episode_group[f" (learner {agent})-move-toward-chemical"], label="move-toward-chemical",
-    #          marker='o', markersize=2, linewidth=1.0)
-    # plt.plot(df_episode_group.index, df_episode_group[f" (learner {agent})-random-walk"], label="random-walk", marker='x', markersize=2,
-    #          linewidth=1.0)
-    # plt.plot(df_episode_group.index, df_episode_group[f" (learner {agent})-drop-chemical"], label="drop-chemical", marker='s',
-    #          markersize=2, linewidth=1.0)
-    # .stackplot could be nice but needs all data at once
-    plt.scatter(df.index, df[f" (learner {agent})-move-toward-chemical"],
-                label="move-toward-chemical", marker='o', s=2)
-    plt.scatter(df.index, df[f" (learner {agent})-random-walk"], label="random-walk",
-                marker='x', s=2)
-    plt.scatter(df.index, df[f" (learner {agent})-drop-chemical"], label="drop-chemical",
-                marker='s', s=2)
-    plt.legend()
-    fig.tight_layout()
-
-
 # DOC compute action frequency per agent (and add to DF)
 for agent in range(50):
-    df[f" (learner {agent})-move-toward-chemical-%"] = df.apply(compute_freqs_3, args=(
+    df[f" (learner {agent})-move-toward-chemical-%"] = df.apply(compute_freqs_5, args=(
         agent, f" (learner {agent})-move-toward-chemical"), axis=1)
-    df[f" (learner {agent})-random-walk-%"] = df.apply(compute_freqs_3, args=(
+    df[f" (learner {agent})-random-walk-%"] = df.apply(compute_freqs_5, args=(
         agent, f" (learner {agent})-random-walk"), axis=1)
-    df[f" (learner {agent})-drop-chemical-%"] = df.apply(compute_freqs_3, args=(
+    df[f" (learner {agent})-drop-chemical-%"] = df.apply(compute_freqs_5, args=(
         agent, f" (learner {agent})-drop-chemical"), axis=1)
-    # df[f" (learner {agent})-move-and-drop-%"] = df.apply(compute_freqs_5, args=(
-    #     agent, f" (learner {agent})-move-and-drop"), axis=1)
-    # df[f" (learner {agent})-walk-and-drop-%"] = df.apply(compute_freqs_5, args=(
-    #     agent, f" (learner {agent})-walk-and-drop"), axis=1)
+    df[f" (learner {agent})-move-and-drop-%"] = df.apply(compute_freqs_5, args=(
+        agent, f" (learner {agent})-move-and-drop"), axis=1)
+    df[f" (learner {agent})-walk-and-drop-%"] = df.apply(compute_freqs_5, args=(
+        agent, f" (learner {agent})-walk-and-drop"), axis=1)
 
 for agent in range(50):
-    df[f" (learner {agent}) MCA"] = df.apply(compute_mca_3, args=(agent,), axis=1)
+    df[f" (learner {agent}) MCA"] = df.apply(compute_mca_5, args=(agent,), axis=1)
 
 # TODO "cluster" agents based on most selected action in last T episodes
 marker_mca = {
@@ -165,13 +139,13 @@ marker_mca = {
         'color': '#DC267F'},
     "move-toward-chemical": {
         'marker': 'o',
-        'color': '#FFB000'}
-    # "move-and-drop": {
-    #     'marker': '*',
-    #     'color': '#785EF0'},
-    # "walk-and-drop": {
-    #     'marker': '^',
-    #     'color': '#FE6100'}
+        'color': '#FFB000'},
+    "move-and-drop": {
+        'marker': '*',
+        'color': '#785EF0'},
+    "walk-and-drop": {
+        'marker': '^',
+        'color': '#FE6100'}
 }
 fig = plt.figure(figsize=(10, 4), dpi=200)
 # ax = fig.add_subplot(projection='3d')
@@ -181,7 +155,7 @@ plt.ylabel(f"agents' ids")
 plt.xlabel(f"episodes")
 for row in df.index[:]:
     # print(row, end=' ')
-    for agent in range(0, 10):
+    for agent in range(40, 50):
         jitter = np.random.uniform(-0.35, 0.35)
         #jitter = 0
         # print(agent, df_episode_group.loc[row, f" (learner {agent}) MCA"], end=' ')
@@ -197,11 +171,13 @@ for row in df.index[:]:
     # ax.scatter(pd.Int64Index(range(50), df_episode_group.index, df_episode_group[f" (learner {agent}) MCA"]))
 custom_lines = [Line2D([], [], color='#648FFF', marker="s"),
                 Line2D([], [], color='#DC267F', marker="x"),
-                Line2D([], [], color='#FFB000', marker="o")]
-                # Line2D([], [], color='#785EF0', marker="*"),
-                # Line2D([], [], color='#FE6100', marker="^")]
-plt.legend(custom_lines, ["drop-chemical", "random-walk", "move-toward-chemical"],
-           loc=1, fontsize="x-small", markerscale=0.5)
-# plt.legend(custom_lines, ["drop-chemical", "random-walk", "move-toward-chemical", "move-and-drop", "walk-and-drop"],
+                Line2D([], [], color='#FFB000', marker="o"),
+                Line2D([], [], color='#785EF0', marker="*"),
+                Line2D([], [], color='#FE6100', marker="^")]
+# plt.legend(custom_lines, ["drop-chemical", "random-walk", "move-toward-chemical"],
 #            loc=1, fontsize="x-small", markerscale=0.5)
+plt.legend(custom_lines, ["drop-chemical", "random-walk", "move-toward-chemical", "move-and-drop", "walk-and-drop"],
+           loc=1, fontsize="x-small", markerscale=0.5)
 fig.tight_layout()
+plt.clf()
+plt.close(fig)

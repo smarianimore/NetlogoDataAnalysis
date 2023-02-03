@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+TIMESTAMP: 08:06:23.256 AM 26-Oct-2022
+PARAMS:
+  population 0
+  wiggle-angle 45
+  look-ahead 1
+  sniff-threshold 0.9
+  sniff-angle 45
+  chemical-drop 3
+  diffuse-share 1
+  evaporation-rate 0.9
+  cluster-threshold 25
+  cluster-radius 15
+  learning-turtles 50
+  ticks-per-episode 500
+  episodes 5000
+  learning-rate 0.9
+  discount-factor 0.999
+  reward 100
+  penalty -2
+  e-greedy 0.9 0.9985
+ACTION SPACE: move-toward-chemical random-walk move-and-drop walk-and-drop drop-chemical 
+OBSERVATION SPACE: chemical-here in-cluster
+REWARD: rewardFunc8
+--------------------------------------------------------------------------------
