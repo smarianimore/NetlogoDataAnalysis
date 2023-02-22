@@ -6,7 +6,7 @@ Repository tracking Python source code used for analysing NetLogo simulation res
 
 TBD
 
-# Installation
+# Installation
 
 TBD
 
