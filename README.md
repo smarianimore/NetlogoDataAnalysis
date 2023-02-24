@@ -22,4 +22,16 @@ Requirements are Python 3.9+ with PIP.
 
 # Usage
 
-TBD
+Given an input directory storing either raw files produced by the NetLogo simulations [1](), or the files already split into `.params` and `.csv` parts, the script `auto_exploration.py` proceeds in 3 stages, applied to each experiment (= `.csv` file):
+
+ 1. the configured performance plots are produced
+ 2. both global and per-agent actions distributions are computed, if not skipped or already done
+ 3. both global and per-agent actions distributions are plotted, if not skipped or already done
+
+All 3 steps can be configured as follows:
+
+ 1. the list of which plots to produce can be configured via
+
+   * variable `whats` = a list of the `.csv` columns (y axis) to plot one at a tiome against the number of episodes (x axis). The number of plots will be equal to `len(whats)`
+   * variable `whatlabels`= the corresponding list of labels to print on the title of the plots
+   * variable `ylabels` = the corresponding list of labels to print on the y axis of the plots
