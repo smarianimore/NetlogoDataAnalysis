@@ -28,6 +28,11 @@ Given an input directory storing either raw files produced by the NetLogo simula
  2. both global and per-agent actions distributions are computed, if not skipped or already done
  3. both global and per-agent actions distributions are plotted, if not skipped or already done
 
+That's it, really: just put the `.txt` files produced from simulations in the right input folder (see below) and launch the script :)
+(An informative log is produced on standard output)
+
+### Main parameters
+
 All 3 steps can be configured as follows:
 
  1. the list of which plots to produce can be configured via
@@ -53,6 +58,8 @@ All 3 steps can be configured as follows:
 ```
    * `aspace_labels` = the corresponding list of labels to print on the plot (1 per action in `action_space`)
 
+### Folders
+
 The directories that the script uses are configurable as follows:
 
  * `root_in` = input folder whre raw datafiles produced by NetLogo simulations [1] (`.txt`) are expected to be
@@ -60,6 +67,8 @@ The directories that the script uses are configurable as follows:
  * `plots_root` = output folder where configured plots are put
 
 If no files are found in `root_in` the scripts then expects files to be already split up in folder `root_out`.
+
+### Other parameters
 
 Other miscellaneous configuration parameters are:
 
