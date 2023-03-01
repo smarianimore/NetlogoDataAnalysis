@@ -18,11 +18,11 @@ Data:
 # Installation
 
 Just clone the repo, install the required packages, and you're good to go :)
-Requirements are Python 3.9+ with PIP.
+Requirements are Python 3.9+ with PiP.
 
 # Usage
 
-Given an input directory storing either raw files produced by the NetLogo simulations [1](), or the files already split into `.params` and `.csv` parts, the script `auto_exploration.py` proceeds in 3 stages, applied to each experiment (= `.csv` file):
+Given an input directory storing either raw files produced by the NetLogo simulations [1], or the files already split into `.params` and `.csv` parts, the script `auto_exploration.py` proceeds in 3 stages, applied to each experiment (= `.csv` file):
 
  1. the configured performance plots are produced
  2. both global and per-agent actions distributions are computed, if not skipped or already done
@@ -32,6 +32,38 @@ All 3 steps can be configured as follows:
 
  1. the list of which plots to produce can be configured via
 
-   * variable `whats` = a list of the `.csv` columns (y axis) to plot one at a tiome against the number of episodes (x axis). The number of plots will be equal to `len(whats)`
-   * variable `whatlabels`= the corresponding list of labels to print on the title of the plots
-   * variable `ylabels` = the corresponding list of labels to print on the y axis of the plots
+   * variable `whats` = a list of the `.csv` columns (y axis) to plot one at a time against the number of episodes (x axis). The number of plots will be equal to `len(whats)`
+   * variable `whatlables`= the corresponding list of lables to print on the title of the plots
+   * variable `ylables` = the corresponding list of lables to print on the y axis of the plots
+
+ 2. the actions distributions to compute  via
+
+   * variable `skip_actions` = `True` to skip computation (hence plotting)
+   * variable `action_space` = list of actions to consider
+
+ 3. how to plot such actions distributions via
+
+   * `agent_mca_look` = a dictionary mapping the action lable in `aspace_lables` (key, see below) to its color and marker in a "look-and-feel" dictionary shaped as below (exemplary)
+
+```
+{
+  'marker': 's',
+  'color': '#648FFF'
+}
+```
+   * `aspace_labels` = the corresponding list of labels to print on the plot (1 per action in `action_space`)
+
+The directories that the script uses are configurable as follows:
+
+ * `root_in` = input folder whre raw datafiles produced by NetLogo simulations [1] (`.txt`) are expected to be
+ * `root_out` = output folder where the above `.txt` files are split into data (`.csv`) and parameters (`.params`) files
+ * `plots_root` = output folder where configured plots are put
+
+If no files are found in `root_in` the scripts then expects files to be already split up in folder `root_out`.
+
+Other miscellaneous configuration parameters are:
+
+ * `header_size` = the number of lines constituting the `.params` file
+ * `alable` = how to call the simulation agents (e.g. learners or non-learners) in plots
+ * `n_agents` = the number of agents in the simulation
+ * `batch_size` = how to split agents in groups for plotting (TL;DR: 50 agents on a single actions distribution plot are too crowded, whereas a batch of 10 agents each in 5 plots -- for 50 total agents -- are much more manageable)
