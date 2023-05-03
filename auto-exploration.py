@@ -31,7 +31,7 @@ whatlabels = ["Average reward", "Average cluster size", "Timestep when clusters 
 ylabels = ["reward", "cluster size", "episode timestep"]
 #ylabels = ["episode timestep"]
 
-skip_actions = True
+skip_actions = False
 
 # (line) marker = ['o', '^', '8', 's', '*', '+', 'x']
 agent_mca_look = {  # NB keys must have same name as actions' labels
