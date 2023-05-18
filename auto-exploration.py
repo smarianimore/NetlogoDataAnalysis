@@ -50,19 +50,22 @@ agent_mca_look = {  # NB keys must have same name as actions' labels
     "walk-and-drop": {
         'marker': '^',
         'color': '#FE6100'},
-    "stand-still": {
+    #"stand-still": {
+    "move-away-chemical": {
         'marker': '8',
         'color': '#000000'
     }
 }
 
 #action_space = [" move-toward-chemical", " random-walk", " drop-chemical"]
-action_space = [" move-toward-chemical", " random-walk", " drop-chemical", " move-and-drop", " walk-and-drop"]
+#action_space = [" move-toward-chemical", " random-walk", " drop-chemical", " move-and-drop", " walk-and-drop"]
+action_space = [" move-away-chemical", " random-walk", " drop-chemical"]
 #action_space = [" random-walk", " stand-still"]
 #action_space = [" move-and-drop", " walk-and-drop"]
 
 #aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical"]
-aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical", "move-and-drop", "walk-and-drop"]
+#aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical", "move-and-drop", "walk-and-drop"]
+aspace_labels = ["move-away-chemical", "random-walk", "drop-chemical"]
 #aspace_labels = ["random-walk", "stand-still"]
 #aspace_labels = ["move-and-drop", "walk-and-drop"]
 
@@ -116,7 +119,7 @@ def split_datafiles(indir="data/RL-slimes/automation-stash/input", outdir="data/
             print("\t... done.")
 
 
-plt.style.use("seaborn-colorblind")
+plt.style.use("seaborn-v0_8-colorblind")
 
 print("Processing input files...")
 split_datafiles(root_in, root_out, header_size)
