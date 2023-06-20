@@ -16,22 +16,31 @@ print(f"Configured for \n\t input={root_in} \n\t output={root_out} \n\t plots={p
 #whats = [" Avg reward X episode", " Avg cluster size X tick"]
 #whats = [" Avg cluster size X tick"]
 #whats = [" First cluster tick", " Avg cluster size X tick"]
-whats = [" Avg reward X episode", " Avg cluster size X tick", " First cluster tick"]
+#whats = [" Avg reward X episode", " Avg cluster size X tick", " First cluster tick", " Avg distance", " Std dev distance", " Min distance"]
+whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
+         " Min reward X episode", " Max reward X episode", " Avg distance", " Std dev distance", " Min distance",
+         " Max distance"]
 #whats = [" First cluster tick"]
 
 #whatlabels = ["Average reward", "Average cluster size"]
 #whatlabels = ["Average cluster size"]
 #whatlabels = ["Timestep when clusters appear", "Average cluster size"]
-whatlabels = ["Average reward", "Average cluster size", "Timestep when clusters appear"]
+#whatlabels = ["Average reward", "Average cluster size", "Timestep when clusters appear", "Average of average distance amongst agents", "Standard deviation of average distance amongst agents", "Minimum average distance amongst agents"]
+whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
+         "Minimum reward", "Maximum reward", "Average distance among agents", "Std. dev. of distance among agents",
+              "Minimum distance among agents",
+         "Maximum distance among agents"]
 #whatlabels = ["Timestep when clusters appear"]
 
 #ylabels = ["reward", "cluster size"]
 #ylabels = ["cluster size"]
 #ylabels = ["episode timestep", "cluster size"]
-ylabels = ["reward", "cluster size", "episode timestep"]
+#ylabels = ["reward", "cluster size", "episode timestep", "Average NetLogo distance", "Std. Dev. NetLogo distance", "Minimum NetLogo distance"]
+ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward", "avg NetLogo distance",
+           "std dev NetLogo distance", "min NetLogo distance", "max NetLogo distance"]
 #ylabels = ["episode timestep"]
 
-skip_actions = False
+skip_actions = True
 
 # (line) marker = ['o', '^', '8', 's', '*', '+', 'x']
 agent_mca_look = {  # NB keys must have same name as actions' labels
@@ -59,19 +68,19 @@ agent_mca_look = {  # NB keys must have same name as actions' labels
 
 #action_space = [" move-toward-chemical", " random-walk", " drop-chemical"]
 #action_space = [" move-toward-chemical", " random-walk", " drop-chemical", " move-and-drop", " walk-and-drop"]
-action_space = [" move-away-chemical", " random-walk", " drop-chemical"]
+action_space = [" move-away-chemical", " random-walk", " drop-chemical", " move-toward-chemical"]
 #action_space = [" random-walk", " stand-still"]
 #action_space = [" move-and-drop", " walk-and-drop"]
 
 #aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical"]
 #aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical", "move-and-drop", "walk-and-drop"]
-aspace_labels = ["move-away-chemical", "random-walk", "drop-chemical"]
+aspace_labels = ["move-away-chemical", "random-walk", "drop-chemical", "move-toward-chemical"]
 #aspace_labels = ["random-walk", "stand-still"]
 #aspace_labels = ["move-and-drop", "walk-and-drop"]
 
 amarkers = [agent_mca_look[a]['marker'] for a in aspace_labels]
-n_agents = 50
-batch_size = 10
+#n_agents = 50
+#batch_size = 10
 
 print(f"Action space={aspace_labels}")
 
@@ -79,6 +88,7 @@ print(f"Action space={aspace_labels}")
 def fix_fname(f):
     fname = f.rsplit('.', maxsplit=1)[0]
     fname = fname.replace(':', '_')
+    fname = fname.replace('\"', '_')
     fname = fname.replace('.', '_')
     fname = fname.replace(' ', '-')
     fname = fname.replace("-PM", '_PM')
@@ -167,6 +177,19 @@ for f in files:
             print("\t\t... done.")
         print(f"\t\t> Computing agents' most chosen action ...")
         all_there = True
+        with open(f"{root_out}/{fname}.params") as infile:
+            for _ in range(header_size):
+                line = infile.readline()
+                if "learning-turtles" in line:
+                    print(f"{line=}")
+                    n_agents = int(line.split()[1])
+                    if n_agents % 10 == 0:
+                        batch_size = 10
+                    elif n_agents % 5 == 0:
+                        batch_size = 5
+                    else:
+                        batch_size = 1
+                    print(f"{n_agents=}, {batch_size=}")
         for b in range(int(n_agents / batch_size)):
             plot_path = f"{plots_root}/{fname}_actions_{b+1}.pdf"
             if not os.path.exists(plot_path):
