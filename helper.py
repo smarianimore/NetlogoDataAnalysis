@@ -87,7 +87,7 @@ def plot_what_vs_episodes(df, what,
     plt.title(f"{whatlabel} per episode")
     plt.ylabel(ylabel)
     plt.xlabel("episodes")
-    plt.scatter(df.index, df[what], s=4, linewidth=1.0, color='#648FFF')
+    plt.scatter(df.index, df[what], s=4, linewidth=1.0, color='#994F00')  #color='#648FFF')
     for window, mark, col in zip(rolling, markers, colors):
         plt.plot(df.index, df[what].rolling(window).mean(), label=f"rolling mean {window}", marker=mark,
                  markersize=.5, linewidth=.5, color=col)

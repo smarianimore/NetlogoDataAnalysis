@@ -6,7 +6,8 @@ import helper
 root_in = "data/RL-slimes/automation-stash/input"
 root_out = "data/RL-slimes/automation-stash/output"
 plots_root = "data/RL-slimes/automation-stash/plots"
-header_size = 25
+header_size = 25  # netlogo learner symulations
+#header_size = 36  # python learner simulations
 #header_size = 18
 alable = "learner"
 #alable = "turtle"
@@ -17,27 +18,34 @@ print(f"Configured for \n\t input={root_in} \n\t output={root_out} \n\t plots={p
 #whats = [" Avg cluster size X tick"]
 #whats = [" First cluster tick", " Avg cluster size X tick"]
 #whats = [" Avg reward X episode", " Avg cluster size X tick", " First cluster tick", " Avg distance", " Std dev distance", " Min distance"]
+#whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
+#         " Min reward X episode", " Max reward X episode", " Avg distance", " Std dev distance", " Min distance",
+#         " Max distance"]
 whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
-         " Min reward X episode", " Max reward X episode", " Avg distance", " Std dev distance", " Min distance",
-         " Max distance"]
+         " Min reward X episode", " Max reward X episode"]
+#whats = [" Avg cluster size X tick", " Avg reward X episode"]
 #whats = [" First cluster tick"]
 
 #whatlabels = ["Average reward", "Average cluster size"]
 #whatlabels = ["Average cluster size"]
 #whatlabels = ["Timestep when clusters appear", "Average cluster size"]
 #whatlabels = ["Average reward", "Average cluster size", "Timestep when clusters appear", "Average of average distance amongst agents", "Standard deviation of average distance amongst agents", "Minimum average distance amongst agents"]
+#whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
+#         "Minimum reward", "Maximum reward", "Average distance among agents", "Std. dev. of distance among agents",
+#              "Minimum distance among agents", "Maximum distance among agents"]
 whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
-         "Minimum reward", "Maximum reward", "Average distance among agents", "Std. dev. of distance among agents",
-              "Minimum distance among agents",
-         "Maximum distance among agents"]
+         "Minimum reward", "Maximum reward"]
+#whatlabels = ["Average cluster size", "Average reward"]
 #whatlabels = ["Timestep when clusters appear"]
 
 #ylabels = ["reward", "cluster size"]
 #ylabels = ["cluster size"]
 #ylabels = ["episode timestep", "cluster size"]
 #ylabels = ["reward", "cluster size", "episode timestep", "Average NetLogo distance", "Std. Dev. NetLogo distance", "Minimum NetLogo distance"]
-ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward", "avg NetLogo distance",
-           "std dev NetLogo distance", "min NetLogo distance", "max NetLogo distance"]
+#ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward", "avg NetLogo distance",
+#           "std dev NetLogo distance", "min NetLogo distance", "max NetLogo distance"]
+ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward"]
+#ylabels = ["cluster size", "avg reward"]
 #ylabels = ["episode timestep"]
 
 skip_actions = True
@@ -66,15 +74,15 @@ agent_mca_look = {  # NB keys must have same name as actions' labels
     }
 }
 
-#action_space = [" move-toward-chemical", " random-walk", " drop-chemical"]
+action_space = [" move-toward-chemical", " random-walk", " drop-chemical"]
 #action_space = [" move-toward-chemical", " random-walk", " drop-chemical", " move-and-drop", " walk-and-drop"]
-action_space = [" move-away-chemical", " random-walk", " drop-chemical", " move-toward-chemical"]
+#action_space = [" move-away-chemical", " random-walk", " drop-chemical", " move-toward-chemical"]
 #action_space = [" random-walk", " stand-still"]
 #action_space = [" move-and-drop", " walk-and-drop"]
 
-#aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical"]
+aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical"]
 #aspace_labels = ["move-toward-chemical", "random-walk", "drop-chemical", "move-and-drop", "walk-and-drop"]
-aspace_labels = ["move-away-chemical", "random-walk", "drop-chemical", "move-toward-chemical"]
+#aspace_labels = ["move-away-chemical", "random-walk", "drop-chemical", "move-toward-chemical"]
 #aspace_labels = ["random-walk", "stand-still"]
 #aspace_labels = ["move-and-drop", "walk-and-drop"]
 
@@ -129,7 +137,8 @@ def split_datafiles(indir="data/RL-slimes/automation-stash/input", outdir="data/
             print("\t... done.")
 
 
-plt.style.use("seaborn-v0_8-colorblind")
+#plt.style.use("seaborn-v0_8-colorblind")
+#plt.style.use("tableau-colorblind10")
 
 print("Processing input files...")
 split_datafiles(root_in, root_out, header_size)
@@ -156,7 +165,7 @@ for f in files:
                 print("\t\t... skip (already there).")
                 n_skip += 1
             else:
-                fig_performance = helper.plot_what_vs_episodes(df, what, wlab, ylab)
+                fig_performance = helper.plot_what_vs_episodes(df, what, wlab, ylab, markers=['o', '*'], colors=['#1AFF1A', '#4B0092'])
                 plt.savefig(plot_path)
                 plt.clf()
                 plt.close(fig_performance)

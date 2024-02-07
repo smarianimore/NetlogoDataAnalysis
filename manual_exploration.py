@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
-
+from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes, mark_inset
 
 def compute_freqs_3(row, ag, col):
     tot = row[f" (learner {ag})-move-toward-chemical"] + row[f" (learner {ag})-random-walk"] + row[
@@ -41,11 +41,14 @@ def compute_mca_5(row, ag):
 # plt.set_cmap("cividis")
 # plt.style.use("cividis")
 # plt.style.use("tableau-colorblind10")
-plt.style.use("seaborn-colorblind")
+# plt.style.use("seaborn-colorblind")
+plt.style.use("seaborn-v0_8-colorblind")
 
 
 # DOC load data and aggregate on episodes (mean)
-df = pd.read_csv("data/RL-slimes/behavioural/5actions/BS-test-5actions-12_58_34_343_AM-18-Oct-2022.csv")
+#df = pd.read_csv("data/RL-slimes/behavioural/5actions/BS-test-5actions-06_44_25_273_AM-24-Oct-2022.csv")
+#df = pd.read_csv("data/RL-slimes/behavioural/3actions/gradient/10000/BS-chemical-gradient-02-03_29_41_745_PM-16-Dec-2022.csv")
+df = pd.read_csv("data/RL-slimes/behavioural/scatter/BS-scatter-01-01_00_32_403_PM-16-May-2023.csv")
 print(df.head())
 # NB no longer useful for new data (see episode datapoints in .csv file!)
 df = df.groupby(["Episode"]).mean()
@@ -91,26 +94,45 @@ plt.legend()
 fig.tight_layout()
 
 # DOC plot global action distribution over time
-fig = plt.figure(figsize=(10, 4), dpi=200)
+# ACSOS 2023 SHEPHERDING EDIT: https://sparkbyexamples.com/pandas/pandas-sum-rows/?expand_article=1
+df2 = df.groupby(df.index // 100).mean()
+df2.set_index(df2.index * 100 + 1, inplace=True)
+df2.head()
+df3 = df.groupby(df.index // 10).mean()
+df3.set_index(df3.index * 10 + 1, inplace=True)
+df3.head()
+
+#fig = plt.figure(figsize=(10, 4), dpi=200)
+fig, ax = plt.subplots(figsize=(10, 4), dpi=200)
 plt.grid()
-plt.title(f"Actions per episode (50 agents, 500 steps per episode)")
+plt.title(f"Actions per episode")
 plt.ylabel(f"# agents choosing action")
 plt.xlabel(f"episodes")
-plt.plot(df.index, df[" move-toward-chemical"], label="move-toward-chemical", marker='o',
-         markersize=1, linewidth=0.5)
-plt.plot(df.index, df[" random-walk"], label="random-walk", marker='x', markersize=1,
-         linewidth=0.5)
-plt.plot(df.index, df[" drop-chemical"], label="drop-chemical", marker='s', markersize=1,
-         linewidth=0.5)
-# plt.plot(df.index, df[" move-and-drop"], label="move-and-drop", marker='*', markersize=1,
+ax.plot(df2.index, df2[" move-toward-chemical"], label="move-toward-chemical", marker='o',
+         markersize=1, linewidth=0.5)#, color='#FFB000')
+ax.plot(df2.index, df2[" random-walk"], label="random-walk", marker='x', markersize=1,
+         linewidth=0.5)#, color='#648FFF')
+ax.plot(df2.index, df2[" drop-chemical"], label="drop-chemical", marker='s', markersize=1,
+         linewidth=0.5)#, color='#DC267F')
+# plt.plot(df3.index, df3[" move-and-drop"], label="move-and-drop", marker='*', markersize=1,
 #          linewidth=0.5)
-# plt.plot(df.index, df[" walk-and-drop"], label="walk-and-drop", marker='^', markersize=1,
+# plt.plot(df3.index, df3[" walk-and-drop"], label="walk-and-drop", marker='^', markersize=1,
 #          linewidth=0.5)
 # plt.plot(df.index, df[" random-walk"], label="random-walk", marker='x', markersize=1,
 #          linewidth=0.5)
 # plt.plot(df.index, df[" stand-still"], label="stand-still", marker='8', markersize=1,
 #          linewidth=0.5)
 plt.legend()
+zax = zoomed_inset_axes(ax, 4, loc="center right")
+zax.plot(df2.index, df2[" move-toward-chemical"]-100, label="move-toward-chemical", marker='o',
+         markersize=1, linewidth=0.5)#, color='#FFB000')
+zax.plot(df2.index, df2[" random-walk"], label="random-walk", marker='x', markersize=1,
+         linewidth=0.5)#, color='#648FFF')
+zax.plot(df2.index, df2[" drop-chemical"], label="drop-chemical", marker='s', markersize=1,
+         linewidth=0.5)#, color='#DC267F')
+zax.set_xlim((4000, 6000)) ; zax.set_xticks([4000, 6000])
+zax.set_ylim((250, 2000)) ; zax.set_yticks([250, 2000])
+mark_inset(ax, zax, loc1=3, loc2=4, fc="none", ec="0.5")
 fig.tight_layout()
 
 # DOC compute action frequency per agent (and add to DF)

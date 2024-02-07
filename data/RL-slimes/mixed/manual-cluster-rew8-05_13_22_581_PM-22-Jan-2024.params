@@ -1,0 +1,25 @@
+--------------------------------------------------------------------------------
+TIMESTAMP: 05:13:22.582 PM 22-Jan-2024
+PARAMS:
+  population 0
+  wiggle-angle 45
+  look-ahead 1
+  sniff-threshold 0.9
+  sniff-angle 45
+  chemical-drop 3
+  diffuse-share 0.9
+  evaporation-rate 0.9
+  cluster-threshold 30
+  cluster-radius 5
+  learning-turtles 50
+  ticks-per-episode 500
+  episodes 5000
+  learning-rate 0.05
+  discount-factor 0.95
+  reward 100
+  penalty -2
+  e-greedy 0.9 0.9985
+ACTION SPACE: random-walk drop-chemical move-toward-chemical 
+OBSERVATION SPACE: chemical-gradient 
+REWARD: rewardFunc8
+--------------------------------------------------------------------------------
