@@ -6,8 +6,8 @@ import helper
 root_in = "data/RL-slimes/automation-stash/input"
 root_out = "data/RL-slimes/automation-stash/output"
 plots_root = "data/RL-slimes/automation-stash/plots"
-header_size = 25  # netlogo learner symulations
-#header_size = 36  # python learner simulations
+#header_size = 25  # netlogo learner symulations
+header_size = 36  # python learner simulations
 #header_size = 18
 alable = "learner"
 #alable = "turtle"
@@ -16,36 +16,36 @@ print(f"Configured for \n\t input={root_in} \n\t output={root_out} \n\t plots={p
 
 #whats = [" Avg reward X episode", " Avg cluster size X tick"]
 #whats = [" Avg cluster size X tick"]
-#whats = [" First cluster tick", " Avg cluster size X tick"]
+#whats = [" First cluster tick", " Avg cluster size X tick", " Max reward X episode"]
 #whats = [" Avg reward X episode", " Avg cluster size X tick", " First cluster tick", " Avg distance", " Std dev distance", " Min distance"]
 #whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
 #         " Min reward X episode", " Max reward X episode", " Avg distance", " Std dev distance", " Min distance",
 #         " Max distance"]
-whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
-         " Min reward X episode", " Max reward X episode"]
-#whats = [" Avg cluster size X tick", " Avg reward X episode"]
+#whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
+#         " Min reward X episode", " Max reward X episode"]
+whats = [" Avg cluster size X tick", " Avg reward X episode"]
 #whats = [" First cluster tick"]
 
 #whatlabels = ["Average reward", "Average cluster size"]
 #whatlabels = ["Average cluster size"]
-#whatlabels = ["Timestep when clusters appear", "Average cluster size"]
+#whatlabels = ["Timestep when clusters appear", "Average cluster size", " Maximum reward"]
 #whatlabels = ["Average reward", "Average cluster size", "Timestep when clusters appear", "Average of average distance amongst agents", "Standard deviation of average distance amongst agents", "Minimum average distance amongst agents"]
 #whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
 #         "Minimum reward", "Maximum reward", "Average distance among agents", "Std. dev. of distance among agents",
 #              "Minimum distance among agents", "Maximum distance among agents"]
-whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
-         "Minimum reward", "Maximum reward"]
-#whatlabels = ["Average cluster size", "Average reward"]
+#whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
+#         "Minimum reward", "Maximum reward"]
+whatlabels = ["Average cluster size", "Average reward"]
 #whatlabels = ["Timestep when clusters appear"]
 
 #ylabels = ["reward", "cluster size"]
 #ylabels = ["cluster size"]
-#ylabels = ["episode timestep", "cluster size"]
+#ylabels = ["episode timestep", "cluster size", "max reward"]
 #ylabels = ["reward", "cluster size", "episode timestep", "Average NetLogo distance", "Std. Dev. NetLogo distance", "Minimum NetLogo distance"]
 #ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward", "avg NetLogo distance",
 #           "std dev NetLogo distance", "min NetLogo distance", "max NetLogo distance"]
-ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward"]
-#ylabels = ["cluster size", "avg reward"]
+#ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward"]
+ylabels = ["cluster size", "avg reward"]
 #ylabels = ["episode timestep"]
 
 skip_actions = True
