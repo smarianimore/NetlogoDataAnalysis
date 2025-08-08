@@ -3,11 +3,11 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import helper
 
-root_in = "data/RL-slimes/automation-stash/input"
-root_out = "data/RL-slimes/automation-stash/output"
-plots_root = "data/RL-slimes/automation-stash/plots"
-#header_size = 25  # netlogo learner symulations
-header_size = 36  # python learner simulations
+root_in = "../../NetLogo-projects/NetLogo-prisoner-spatial/experiments/"  # "data/RL-slimes/automation-stash/input"
+root_out = "../../NetLogo-projects/NetLogo-prisoner-spatial/experiments/"
+plots_root = "../../NetLogo-projects/NetLogo-prisoner-spatial/experiments/"
+header_size = 30  # netlogo learner symulations
+#header_size = 33  # python learner simulations
 #header_size = 18
 alable = "learner"
 #alable = "turtle"
@@ -23,8 +23,9 @@ print(f"Configured for \n\t input={root_in} \n\t output={root_out} \n\t plots={p
 #         " Max distance"]
 #whats = [" First cluster tick", " Avg cluster size X tick", " Avg reward X episode", " Std dev reward X episode",
 #         " Min reward X episode", " Max reward X episode"]
-whats = [" Avg cluster size X tick", " Avg reward X episode"]
+#whats = [" Avg cluster size X tick", " Avg reward X episode"]
 #whats = [" First cluster tick"]
+whats = ["Average_episodic_reward","Average_episodic_payoff","Average_accumulated_scores","Episodic_coop_games","Episodic_def_games","Acumulated_coop_games","Accumulated_def_games"]
 
 #whatlabels = ["Average reward", "Average cluster size"]
 #whatlabels = ["Average cluster size"]
@@ -35,7 +36,8 @@ whats = [" Avg cluster size X tick", " Avg reward X episode"]
 #              "Minimum distance among agents", "Maximum distance among agents"]
 #whatlabels = ["Timestep when clusters appear", "Average cluster size", "Average reward", "Std. dev. of reward",
 #         "Minimum reward", "Maximum reward"]
-whatlabels = ["Average cluster size", "Average reward"]
+#whatlabels = ["Average cluster size", "Average reward"]
+whatlabels = ["Average_episodic_reward","Average_episodic_payoff","Average_accumulated_scores","Episodic_coop_games","Episodic_def_games","Acumulated_coop_games","Accumulated_def_games"]
 #whatlabels = ["Timestep when clusters appear"]
 
 #ylabels = ["reward", "cluster size"]
@@ -45,8 +47,9 @@ whatlabels = ["Average cluster size", "Average reward"]
 #ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward", "avg NetLogo distance",
 #           "std dev NetLogo distance", "min NetLogo distance", "max NetLogo distance"]
 #ylabels = ["episode timestep", "cluster size", "avg reward", "std dev reward", "min reward", "max reward"]
-ylabels = ["cluster size", "avg reward"]
+#ylabels = ["cluster size", "avg reward"]
 #ylabels = ["episode timestep"]
+ylabels = ["Average_episodic_reward","Average_episodic_payoff","Average_accumulated_scores","Episodic_coop_games","Episodic_def_games","Acumulated_coop_games","Accumulated_def_games"]
 
 skip_actions = True
 
@@ -90,7 +93,8 @@ amarkers = [agent_mca_look[a]['marker'] for a in aspace_labels]
 #n_agents = 50
 #batch_size = 10
 
-print(f"Action space={aspace_labels}")
+if not skip_actions:
+    print(f"Action space={aspace_labels}")
 
 
 def fix_fname(f):
@@ -123,6 +127,7 @@ def split_datafiles(indir="data/RL-slimes/automation-stash/input", outdir="data/
                 for _ in range(header_size):  # NB number of lines composing .params
                     params.append(infile.readline())
                 data = infile.readlines()
+                data.remove("DATA)\n")
             out_pname = f"{fname}.params"
             with open(f"{outdir}/{out_pname}", 'w') as outfile:
                 print(f"\t\t> {out_pname} ...")
